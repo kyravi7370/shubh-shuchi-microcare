@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Flutter
@@ -21,10 +21,10 @@ jobs:
       - name: Create Flutter App
         run: flutter create app
 
-      - - name: Copy Project Files
-  run: |
-    cp -r lib app/lib
-    cp pubspec.yaml app/pubspec.yaml
+      - name: Copy Project Files
+        run: |
+          cp -r lib app/
+          cp pubspec.yaml app/
 
       - name: Build APK
         run: |
