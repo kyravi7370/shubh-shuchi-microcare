@@ -19,7 +19,7 @@ jobs:
           flutter-version: 3.19.0
 
       - name: Create Android project
-        run: flutter create .
+        run: flutter create . --project-name shubh_shuchi_microcare
 
       - name: Install dependencies
         run: flutter pub get
