@@ -1,69 +1,92 @@
 import 'package:flutter/material.dart';
-import 'add_loan.dart';
-import 'collection.dart';
 
 class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
+
   @override
-  _DashboardScreenState createState() => _DashboardScreenState();
+  State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
 
-  double totalInvestment = 0;
-  double totalLoan = 0;
-  double totalCollection = 0;
+  final TextEditingController loanController = TextEditingController();
+  final TextEditingController profitController = TextEditingController();
+  final TextEditingController daysController = TextEditingController();
+
+  double dailyCollection = 0;
+
+  void calculate() {
+    double loan = double.tryParse(loanController.text) ?? 0;
+    double profit = double.tryParse(profitController.text) ?? 0;
+    double days = double.tryParse(daysController.text) ?? 1;
+
+    setState(() {
+      dailyCollection = (loan + profit) / days;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Shubh Shuchi Microcare"),
+        title: const Text("Shubh Shuchi Microcare"),
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
 
-            card("Total Investment", totalInvestment),
-            card("Total Loan", totalLoan),
-            card("Total Collection", totalCollection),
-
-            SizedBox(height: 20),
-
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddLoanScreen()),
-                );
-              },
-              child: Text("Add Loan"),
+            TextField(
+              controller: loanController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: "Loan Amount",
+                border: OutlineInputBorder(),
+              ),
             ),
 
-            SizedBox(height: 10),
+            const SizedBox(height: 15),
+
+            TextField(
+              controller: profitController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: "Profit",
+                border: OutlineInputBorder(),
+              ),
+            ),
+
+            const SizedBox(height: 15),
+
+            TextField(
+              controller: daysController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: "Days",
+                border: OutlineInputBorder(),
+              ),
+            ),
+
+            const SizedBox(height: 20),
 
             ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CollectionScreen()),
-                );
-              },
-              child: Text("Collection"),
+              onPressed: calculate,
+              child: const Text("Calculate Daily Collection"),
             ),
+
+            const SizedBox(height: 20),
+
+            Text(
+              "Daily Collection: ₹ $dailyCollection",
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            )
 
           ],
         ),
-      ),
-    );
-  }
-
-  Widget card(String title, double amount) {
-    return Card(
-      child: ListTile(
-        title: Text(title),
-        trailing: Text("Rs $amount"),
       ),
     );
   }
