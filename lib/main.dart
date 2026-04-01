@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/dashboard.dart';
-
+import 'package:shubh_shuchi_microcare/screens/dashboard.dart';
 void main() {
   runApp(ShubhShuchiApp());
 }
