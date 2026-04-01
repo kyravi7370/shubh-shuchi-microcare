@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Flutter
@@ -18,17 +18,22 @@ jobs:
         with:
           flutter-version: 3.19.0
 
-      - name: Create Android project
-        run: flutter create . --project-name shubh_shuchi_microcare
+      - name: Create Flutter App
+        run: flutter create app
 
-      - name: Install dependencies
-        run: flutter pub get
+      - name: Copy Source Code
+        run: |
+          cp -r lib app/
+          cp pubspec.yaml app/
 
       - name: Build APK
-        run: flutter build apk --release
+        run: |
+          cd app
+          flutter pub get
+          flutter build apk --release
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: shubh-shuchi-microcare
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: app/build/app/outputs/flutter-apk/app-release.apk
