@@ -1,90 +1,43 @@
 import 'package:flutter/material.dart';
 
-class DashboardScreen extends StatefulWidget {
+class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
-
-  @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
-
-  final TextEditingController loanController = TextEditingController();
-  final TextEditingController profitController = TextEditingController();
-  final TextEditingController daysController = TextEditingController();
-
-  double dailyCollection = 0;
-
-  void calculate() {
-    double loan = double.tryParse(loanController.text) ?? 0;
-    double profit = double.tryParse(profitController.text) ?? 0;
-    double days = double.tryParse(daysController.text) ?? 1;
-
-    setState(() {
-      dailyCollection = (loan + profit) / days;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Shubh Shuchi Microcare"),
-        centerTitle: true,
+        backgroundColor: Colors.green,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-
-            TextField(
-              controller: loanController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Loan Amount",
-                border: OutlineInputBorder(),
+            Card(
+              child: ListTile(
+                title: const Text("Loan Management"),
+                subtitle: const Text("Manage loans and customers"),
+                leading: const Icon(Icons.account_balance),
+                onTap: () {},
               ),
             ),
-
-            const SizedBox(height: 15),
-
-            TextField(
-              controller: profitController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Profit",
-                border: OutlineInputBorder(),
+            Card(
+              child: ListTile(
+                title: const Text("Daily Collection"),
+                subtitle: const Text("Track daily payments"),
+                leading: const Icon(Icons.calendar_today),
+                onTap: () {},
               ),
             ),
-
-            const SizedBox(height: 15),
-
-            TextField(
-              controller: daysController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Days",
-                border: OutlineInputBorder(),
+            Card(
+              child: ListTile(
+                title: const Text("Reports"),
+                subtitle: const Text("View financial reports"),
+                leading: const Icon(Icons.bar_chart),
+                onTap: () {},
               ),
             ),
-
-            const SizedBox(height: 20),
-
-            ElevatedButton(
-              onPressed: calculate,
-              child: const Text("Calculate Daily Collection"),
-            ),
-
-            const SizedBox(height: 20),
-
-            Text(
-              "Daily Collection: ₹ $dailyCollection",
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            )
-
           ],
         ),
       ),
