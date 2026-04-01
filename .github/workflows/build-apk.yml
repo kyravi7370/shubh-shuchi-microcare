@@ -22,9 +22,10 @@ jobs:
         run: flutter create app
 
       - name: Copy Project Files
-        run: |
-          cp -r lib app/
-          cp pubspec.yaml app/
+  run: |
+    rm -rf app/lib
+    cp -r lib app/lib
+    cp pubspec.yaml app/pubspec.yaml
 
       - name: Build APK
         run: |
